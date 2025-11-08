@@ -129,65 +129,21 @@ class _MultiStepFormPageState extends State<MultiStepFormPage> {
       case 2:
         return _buildFormTemplate(
           step: step,
-          title: "Langkah 3: Riwayat Kesehatan",
+          title: "Langkah 3: Informasi Bunda",
           fields: [
             _buildTextField(
-              "Riwayat Penyakit",
-              "riwayat_penyakit",
-              TextInputType.text,
-            ),
-            _buildTextField(
-              "Alergi Obat/Makanan",
-              "alergi",
-              TextInputType.text,
-            ),
-            _buildTextField(
-              "Golongan Darah",
-              "golongan_darah",
-              TextInputType.text,
-            ),
-          ],
-        );
-      case 3:
-        return _buildFormTemplate(
-          step: step,
-          title: "Langkah 4: Pola Makan",
-          fields: [
-            _buildTextField(
-              "Frekuensi Makan per Hari",
-              "frekuensi_makan",
+              "Lingkar Perut (cm)",
+              "lingkar_perut",
               TextInputType.number,
             ),
             _buildTextField(
-              "Jenis Makanan Favorit",
-              "makanan_favorit",
-              TextInputType.text,
-            ),
-            _buildTextField(
-              "Makanan yang Dihindari",
-              "makanan_dihindari",
-              TextInputType.text,
+              "Lingkar Lengan atas (cm)",
+              "lingkar_lengan_atas",
+              TextInputType.number,
             ),
           ],
         );
-      case 4:
-        return _buildFormTemplate(
-          step: step,
-          title: "Langkah 5: Kontak Darurat",
-          fields: [
-            _buildTextField(
-              "Nama Kontak Darurat",
-              "nama_darurat",
-              TextInputType.name,
-            ),
-            _buildTextField(
-              "No. Telepon Darurat",
-              "telp_darurat",
-              TextInputType.phone,
-            ),
-            _buildTextField("Hubungan", "hubungan_darurat", TextInputType.text),
-          ],
-        );
+
       default:
         return Container();
     }
@@ -209,25 +165,7 @@ class _MultiStepFormPageState extends State<MultiStepFormPage> {
       case 1:
         return _buildFormTemplate(
           step: step,
-          title: "Langkah 2: Data Bayi",
-          fields: [
-            _buildTextField("Nama Bayi", "nama_bayi", TextInputType.name),
-            _buildTextField(
-              "Usia Bayi (bulan)",
-              "usia_bayi",
-              TextInputType.number,
-            ),
-            _buildTextField(
-              "Berat Badan Bayi (kg)",
-              "bb_bayi",
-              TextInputType.number,
-            ),
-          ],
-        );
-      case 2:
-        return _buildFormTemplate(
-          step: step,
-          title: "Langkah 3: Pola Menyusui",
+          title: "Langkah 2: Pola Menyusui",
           fields: [
             _buildTextField(
               "Frekuensi Menyusui per Hari",
@@ -239,53 +177,26 @@ class _MultiStepFormPageState extends State<MultiStepFormPage> {
               "asi_eksklusif",
               TextInputType.text,
             ),
-            _buildTextField(
-              "Kesulitan Menyusui?",
-              "kesulitan",
-              TextInputType.text,
-            ),
           ],
         );
-      case 3:
+      case 2:
         return _buildFormTemplate(
           step: step,
-          title: "Langkah 4: Pola Makan Ibu",
+          title: "Langkah 3: IMT Bunda",
           fields: [
             _buildTextField(
-              "Frekuensi Makan per Hari",
-              "frekuensi_makan",
+              "Tinggi Badan (cm)",
+              "tinggi_badan",
               TextInputType.number,
             ),
             _buildTextField(
-              "Konsumsi Vitamin/Suplemen",
-              "vitamin",
-              TextInputType.text,
-            ),
-            _buildTextField(
-              "Makanan yang Dihindari",
-              "makanan_dihindari",
-              TextInputType.text,
+              "Berat Badan (kg)",
+              "berat_badan",
+              TextInputType.number,
             ),
           ],
         );
-      case 4:
-        return _buildFormTemplate(
-          step: step,
-          title: "Langkah 5: Kontak Darurat",
-          fields: [
-            _buildTextField(
-              "Nama Kontak Darurat",
-              "nama_darurat",
-              TextInputType.name,
-            ),
-            _buildTextField(
-              "No. Telepon Darurat",
-              "telp_darurat",
-              TextInputType.phone,
-            ),
-            _buildTextField("Hubungan", "hubungan_darurat", TextInputType.text),
-          ],
-        );
+
       default:
         return Container();
     }
@@ -297,25 +208,7 @@ class _MultiStepFormPageState extends State<MultiStepFormPage> {
       case 0:
         return _buildFormTemplate(
           step: step,
-          title: "Langkah 1: Data Anak",
-          fields: [
-            _buildTextField("Nama Anak", "nama_anak", TextInputType.name),
-            _buildTextField(
-              "Usia Anak (bulan)",
-              "usia_anak",
-              TextInputType.number,
-            ),
-            _buildTextField(
-              "Jenis Kelamin",
-              "jenis_kelamin",
-              TextInputType.text,
-            ),
-          ],
-        );
-      case 1:
-        return _buildFormTemplate(
-          step: step,
-          title: "Langkah 2: Data Fisik",
+          title: "Langkah 1: IMT Anak",
           fields: [
             _buildTextField(
               "Berat Badan (kg)",
@@ -327,63 +220,14 @@ class _MultiStepFormPageState extends State<MultiStepFormPage> {
               "tinggi_badan",
               TextInputType.number,
             ),
-            _buildTextField(
-              "Lingkar Kepala (cm)",
-              "lingkar_kepala",
-              TextInputType.number,
+            _buildDropdownField(
+              label: "Umur Anak (bulan)",
+              keyName: "umur_anak",
+              items: List.generate(24, (index) => "${index + 1} bulan"),
             ),
           ],
         );
-      case 2:
-        return _buildFormTemplate(
-          step: step,
-          title: "Langkah 3: Riwayat Kesehatan",
-          fields: [
-            _buildTextField(
-              "Riwayat Penyakit",
-              "riwayat_penyakit",
-              TextInputType.text,
-            ),
-            _buildTextField("Alergi", "alergi", TextInputType.text),
-            _buildTextField(
-              "Imunisasi Terakhir",
-              "imunisasi",
-              TextInputType.text,
-            ),
-          ],
-        );
-      case 3:
-        return _buildFormTemplate(
-          step: step,
-          title: "Langkah 4: Pola Makan",
-          fields: [
-            _buildTextField(
-              "Frekuensi Makan per Hari",
-              "frekuensi_makan",
-              TextInputType.number,
-            ),
-            _buildTextField(
-              "Jenis Makanan Utama",
-              "makanan_utama",
-              TextInputType.text,
-            ),
-            _buildTextField(
-              "Makanan yang Dihindari",
-              "makanan_dihindari",
-              TextInputType.text,
-            ),
-          ],
-        );
-      case 4:
-        return _buildFormTemplate(
-          step: step,
-          title: "Langkah 5: Data Orang Tua",
-          fields: [
-            _buildTextField("Nama Orang Tua", "nama_ortu", TextInputType.name),
-            _buildTextField("No. Telepon", "telp_ortu", TextInputType.phone),
-            _buildTextField("Alamat", "alamat", TextInputType.streetAddress),
-          ],
-        );
+
       default:
         return Container();
     }
@@ -570,4 +414,10 @@ class _MultiStepFormPageState extends State<MultiStepFormPage> {
     _pageController.dispose();
     super.dispose();
   }
+
+  _buildDropdownField({
+    required String label,
+    required String keyName,
+    required List<String> items,
+  }) {}
 }
