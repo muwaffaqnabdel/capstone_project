@@ -22,11 +22,10 @@ class _LoginPageState extends State<LoginPage> {
       final password = _passwordController.text;
 
       if (email == 'abdel@gmail.com' && password == 'password123') {
+        // PERBAIKAN: Navigasi ke halaman pilih kategori
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const RegistrationFormPage(userRole: 'ibu'),
-          ),
+          MaterialPageRoute(builder: (context) => RegistrationFormPage()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
