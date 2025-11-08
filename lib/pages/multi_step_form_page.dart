@@ -26,6 +26,7 @@ class _MultiStepFormPageState extends State<MultiStepFormPage> {
 
   // Dropdown values
   String? selectedUsiaKehamilan;
+  String? selectedUsiaBatita;
 
   @override
   void initState() {

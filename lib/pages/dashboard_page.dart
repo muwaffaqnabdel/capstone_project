@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'rekomendasi_page.dart';
 import 'scan_page.dart';
 import 'chatbot_page.dart';
@@ -117,7 +118,10 @@ class _DashboardPageState extends State<DashboardPage> {
                       children: [
                         Text(
                           "Halo, Bunda 👋",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
+                            fontStyle:
+                                AppBarThemeData().titleTextStyle?.fontStyle,
+
                             fontSize: 16,
                             color: Colors.grey[600],
                           ),
@@ -125,8 +129,8 @@ class _DashboardPageState extends State<DashboardPage> {
                         const SizedBox(height: 4),
                         Text(
                           widget.userName,
-                          style: const TextStyle(
-                            fontSize: 24,
+                          style: GoogleFonts.poppins(
+                            fontSize: 27,
                             fontWeight: FontWeight.bold,
                             color: Colors.black87,
                           ),
