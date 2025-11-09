@@ -259,7 +259,8 @@ class _DashboardPageState extends State<DashboardPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const RekomendasiPage(),
+                            builder: (_) =>
+                                const RekomendasiPage(mealType: 'lunch'),
                           ),
                         );
                       },

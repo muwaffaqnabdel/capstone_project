@@ -39,7 +39,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _pages = const [
     DashboardPage(),
-    RekomendasiPage(),
+    RekomendasiPage(mealType: 'lunch'),
     ScanPage(),
     ChatbotPage(),
     EdukasiPage(),

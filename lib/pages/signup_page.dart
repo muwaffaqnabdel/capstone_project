@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Halaman Sign Up untuk pendaftaran user baru
+/// Stateful widget yang mengelola form registrasi dengan validasi
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
@@ -8,22 +10,32 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  // Form key untuk validasi form secara keseluruhan
   final _formKey = GlobalKey<FormState>();
+
+  // Controller untuk mengambil dan mengontrol value dari text field
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  // State untuk mengontrol visibility password (tampil/sembunyi)
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  // State untuk checkbox persetujuan syarat & ketentuan
   bool _agreeToTerms = false;
 
-  // Konstanta Warna untuk Konsistensi
+  // Konstanta warna untuk konsistensi desain di seluruh halaman
   static const Color primaryColor = Color(0xFF9C27B0); // Deep Purple
   static const Color secondaryColor = Color(0xFFE91E63); // Pink
 
-  // Fungsi Pembantu untuk Dekorasi Input
+  /// Fungsi helper untuk membuat dekorasi input field yang konsisten
+  /// Parameter:
+  /// - hintText: teks placeholder dalam input
+  /// - icon: icon yang ditampilkan di sebelah kiri input
+  /// - suffixIcon: optional icon di sebelah kanan (untuk toggle password)
   InputDecoration _buildInputDecoration({
     required String hintText,
     required IconData icon,
@@ -32,27 +44,37 @@ class _SignUpPageState extends State<SignUpPage> {
     return InputDecoration(
       hintText: hintText,
       hintStyle: TextStyle(color: Colors.grey[400]),
-      filled: true,
-      fillColor: Colors.grey[50],
-      prefixIcon: Icon(icon, color: Colors.grey[600]),
-      suffixIcon: suffixIcon,
+      filled: true, // Mengisi background input dengan warna
+      fillColor: Colors.grey[50], // Warna background input
+      prefixIcon: Icon(icon, color: Colors.grey[600]), // Icon di sebelah kiri
+      suffixIcon: suffixIcon, // Icon di sebelah kanan (opsional)
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+
+      // Border default (tidak terlihat)
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
-        borderSide: BorderSide.none, // Sembunyikan border default
+        borderSide: BorderSide.none,
       ),
+
+      // Border saat input tidak aktif
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
         borderSide: BorderSide(color: Colors.grey[200]!, width: 1),
       ),
+
+      // Border saat input aktif (fokus)
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
         borderSide: const BorderSide(color: primaryColor, width: 2),
       ),
+
+      // Border saat ada error
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
         borderSide: const BorderSide(color: Colors.red, width: 1),
       ),
+
+      // Border saat fokus dan ada error
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
         borderSide: const BorderSide(color: Colors.red, width: 2),
@@ -60,26 +82,31 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  /// Fungsi untuk memproses pendaftaran user
+  /// Melakukan validasi form dan checkbox persetujuan
   void _signUp() {
+    // Validasi semua input field menggunakan validator yang sudah didefinisikan
     if (_formKey.currentState!.validate()) {
+      // Cek apakah user sudah menyetujui syarat & ketentuan
       if (!_agreeToTerms) {
-        // Tampilkan snackbar untuk error persetujuan
+        // Tampilkan peringatan jika belum menyetujui
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text('Anda harus menyetujui Syarat & Ketentuan'),
             backgroundColor: secondaryColor.withOpacity(0.8),
-            behavior: SnackBarBehavior.floating,
+            behavior: SnackBarBehavior.floating, // Snackbar mengambang
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
         );
-        return;
+        return; // Hentikan proses jika belum setuju
       }
 
+      // Ambil username dari controller
       final username = _usernameController.text;
 
-      // Tampilkan snackbar sukses
+      // Tampilkan pesan sukses registrasi
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Selamat datang, $username! Akun berhasil dibuat.'),
@@ -91,8 +118,8 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
 
-      // Navigasi ke Dashboard
-      Navigator.pop(context); // Kembali ke halaman login
+      // Kembali ke halaman login setelah berhasil registrasi
+      Navigator.pop(context);
     }
   }
 
@@ -100,31 +127,37 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      // AppBar dengan tombol back
       appBar: AppBar(
-        // Menambahkan tombol kembali untuk UX yang lebih baik
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primaryColor),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () =>
+              Navigator.pop(context), // Kembali ke halaman sebelumnya
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: Colors.transparent, // AppBar transparan
+        elevation: 0, // Tidak ada bayangan
       ),
+
       body: SafeArea(
+        // SingleChildScrollView agar bisa scroll jika keyboard muncul
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
+
+            // Form wrapper untuk validasi
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
                   const SizedBox(height: 10),
 
-                  // Header Section dengan Gradient
+                  // Header dengan gradient dan icon
                   _buildHeaderSection(),
 
                   const SizedBox(height: 30),
 
-                  // Input Username
+                  // Input Username dengan validasi
                   TextFormField(
                     controller: _usernameController,
                     decoration: _buildInputDecoration(
@@ -132,49 +165,55 @@ class _SignUpPageState extends State<SignUpPage> {
                       icon: Icons.person_outline,
                     ),
                     validator: (value) {
+                      // Validasi: tidak boleh kosong
                       if (value == null || value.isEmpty) {
                         return 'Username tidak boleh kosong';
                       }
+                      // Validasi: minimal 3 karakter
                       if (value.length < 3) {
                         return 'Username minimal 3 karakter';
                       }
-                      return null;
+                      return null; // Valid
                     },
                   ),
 
                   const SizedBox(height: 16),
 
-                  // Input Email
+                  // Input Email dengan validasi format email
                   TextFormField(
                     controller: _emailController,
                     decoration: _buildInputDecoration(
                       hintText: 'Email',
                       icon: Icons.email_outlined,
                     ),
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType:
+                        TextInputType.emailAddress, // Keyboard khusus email
                     validator: (value) {
+                      // Validasi: tidak boleh kosong
                       if (value == null || value.isEmpty) {
                         return 'Masukkan email Anda';
                       }
-                      // Validasi email sederhana
+                      // Validasi: format email harus benar menggunakan regex
                       if (!RegExp(
                         r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                       ).hasMatch(value)) {
                         return 'Format email tidak valid';
                       }
-                      return null;
+                      return null; // Valid
                     },
                   ),
 
                   const SizedBox(height: 16),
 
-                  // Input Password
+                  // Input Password dengan toggle visibility
                   TextFormField(
                     controller: _passwordController,
-                    obscureText: _obscurePassword,
+                    obscureText:
+                        _obscurePassword, // Sembunyikan/tampilkan password
                     decoration: _buildInputDecoration(
                       hintText: 'Password',
                       icon: Icons.lock_outline,
+                      // Tombol untuk toggle visibility password
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword
@@ -183,6 +222,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           color: Colors.grey[600],
                         ),
                         onPressed: () {
+                          // Toggle state visibility password
                           setState(() {
                             _obscurePassword = !_obscurePassword;
                           });
@@ -190,25 +230,28 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     validator: (value) {
+                      // Validasi: tidak boleh kosong
                       if (value == null || value.isEmpty) {
                         return 'Password tidak boleh kosong';
                       }
+                      // Validasi: minimal 6 karakter
                       if (value.length < 6) {
                         return 'Password minimal 6 karakter';
                       }
-                      return null;
+                      return null; // Valid
                     },
                   ),
 
                   const SizedBox(height: 16),
 
-                  // Input Confirm Password
+                  // Input Konfirmasi Password dengan validasi kesamaan
                   TextFormField(
                     controller: _confirmPasswordController,
                     obscureText: _obscureConfirmPassword,
                     decoration: _buildInputDecoration(
                       hintText: 'Konfirmasi Password',
                       icon: Icons.lock_outline,
+                      // Tombol untuk toggle visibility confirm password
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureConfirmPassword
@@ -217,6 +260,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           color: Colors.grey[600],
                         ),
                         onPressed: () {
+                          // Toggle state visibility confirm password
                           setState(() {
                             _obscureConfirmPassword = !_obscureConfirmPassword;
                           });
@@ -224,33 +268,35 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     validator: (value) {
+                      // Validasi: tidak boleh kosong
                       if (value == null || value.isEmpty) {
                         return 'Konfirmasi password Anda';
                       }
+                      // Validasi: harus sama dengan password
                       if (value != _passwordController.text) {
                         return 'Password tidak cocok';
                       }
-                      return null;
+                      return null; // Valid
                     },
                   ),
 
                   const SizedBox(height: 20),
 
-                  // Checkbox Syarat & Ketentuan
+                  // Checkbox persetujuan syarat & ketentuan
                   _buildTermsAndConditionsCheckbox(),
 
                   const SizedBox(height: 24),
 
-                  // Tombol Sign Up (DAFTAR)
+                  // Tombol Daftar/Sign Up
                   SizedBox(
-                    width: double.infinity,
-                    height: 55, // Tombol sedikit lebih tinggi
+                    width: double.infinity, // Full width
+                    height: 55,
                     child: ElevatedButton(
-                      onPressed: _signUp,
+                      onPressed: _signUp, // Panggil fungsi sign up
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,
                         foregroundColor: Colors.white,
-                        elevation: 5, // Tambahkan sedikit bayangan
+                        elevation: 5, // Bayangan untuk depth
                         shadowColor: primaryColor.withOpacity(0.4),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -261,7 +307,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: 1.5,
+                          letterSpacing: 1.5, // Spasi antar huruf
                         ),
                       ),
                     ),
@@ -269,16 +315,16 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   const SizedBox(height: 20),
 
-                  // Pembatas dengan teks
+                  // Divider dengan teks "Atau daftar dengan"
                   _buildDividerWithText('Atau daftar dengan'),
 
                   const SizedBox(height: 20),
 
-                  // Tombol Daftar Sosial
+                  // Tombol social media sign up (Google, Facebook, Apple)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Google
+                      // Google Sign Up
                       _socialSignUpButton(
                         icon: Icons.g_mobiledata,
                         color: Colors.red,
@@ -287,18 +333,20 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                       ),
                       const SizedBox(width: 16),
-                      // Facebook
+
+                      // Facebook Sign Up
                       _socialSignUpButton(
                         icon: Icons.facebook,
                         color: const Color(
                           0xFF1877F2,
-                        ), // Warna Facebook yang lebih akurat
+                        ), // Official Facebook blue
                         onPressed: () {
                           /* Handle Facebook sign up */
                         },
                       ),
                       const SizedBox(width: 16),
-                      // Apple
+
+                      // Apple Sign Up
                       _socialSignUpButton(
                         icon: Icons.apple,
                         color: Colors.black,
@@ -311,7 +359,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   const SizedBox(height: 30),
 
-                  // Link Login
+                  // Link ke halaman Login untuk user yang sudah punya akun
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -321,7 +369,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context); // Kembali ke halaman login
                         },
                         child: const Text(
                           'Login',
@@ -329,8 +377,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             color: primaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
-                            decoration: TextDecoration
-                                .underline, // Tambahkan garis bawah
+                            decoration: TextDecoration.underline,
                           ),
                         ),
                       ),
@@ -347,31 +394,37 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  // --- Fungsi Pembantu untuk Strukturisasi Kode ---
+  // --- Widget Helper Functions ---
 
+  /// Widget untuk membuat header section dengan gradient background
+  /// Berisi icon, title, dan subtitle
   Widget _buildHeaderSection() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
+        // Gradient dari primary ke secondary color
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [primaryColor, secondaryColor],
         ),
         borderRadius: BorderRadius.circular(30),
+        // Shadow untuk depth effect
         boxShadow: [
           BoxShadow(
             color: primaryColor.withOpacity(0.3),
             spreadRadius: 2,
             blurRadius: 10,
-            offset: const Offset(0, 5),
+            offset: const Offset(0, 5), // Bayangan ke bawah
           ),
         ],
       ),
       child: Column(
         children: [
-          const SizedBox(height: 5), // Spacing di atas ikon
+          const SizedBox(height: 5),
+
+          // Icon dalam lingkaran putih
           Container(
             width: 80,
             height: 80,
@@ -380,13 +433,15 @@ class _SignUpPageState extends State<SignUpPage> {
               shape: BoxShape.circle,
             ),
             child: const Icon(
-              Icons
-                  .person_add_alt_1, // Icon yang sedikit berbeda untuk estetika
+              Icons.person_add_alt_1,
               size: 40,
               color: primaryColor,
             ),
           ),
+
           const SizedBox(height: 16),
+
+          // Title
           const Text(
             "Buat Akun Baru",
             style: TextStyle(
@@ -395,37 +450,48 @@ class _SignUpPageState extends State<SignUpPage> {
               color: Colors.white,
             ),
           ),
+
           const SizedBox(height: 4),
+
+          // Subtitle
           const Text(
             "Bergabunglah dengan Bundacare",
             style: TextStyle(fontSize: 14, color: Colors.white70),
           ),
-          const SizedBox(height: 5), // Spacing di bawah teks
+
+          const SizedBox(height: 5),
         ],
       ),
     );
   }
 
+  /// Widget untuk membuat checkbox persetujuan syarat & ketentuan
+  /// Dengan link yang bisa diklik untuk melihat detail S&K
   Widget _buildTermsAndConditionsCheckbox() {
     return Row(
       children: [
+        // Checkbox dengan ukuran custom
         SizedBox(
           height: 24,
           width: 24,
           child: Checkbox(
             value: _agreeToTerms,
             onChanged: (value) {
+              // Update state ketika checkbox diklik
               setState(() {
                 _agreeToTerms = value ?? false;
               });
             },
-            activeColor: primaryColor,
+            activeColor: primaryColor, // Warna saat checked
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4),
             ),
           ),
         ),
+
         const SizedBox(width: 8),
+
+        // Teks dengan link clickable
         Expanded(
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
@@ -434,9 +500,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 'Saya setuju dengan ',
                 style: TextStyle(fontSize: 13, color: Colors.grey),
               ),
+
+              // Link clickable untuk Syarat & Ketentuan
               GestureDetector(
                 onTap: () {
-                  // Simulasi: Tampilkan SnackBar saat T&C diklik
+                  // Simulasi: Tampilkan SnackBar (dalam real app, buka halaman S&K)
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: const Text(
@@ -467,10 +535,15 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  /// Widget untuk membuat divider dengan teks di tengah
+  /// Digunakan untuk memisahkan form utama dengan opsi social login
   Widget _buildDividerWithText(String text) {
     return Row(
       children: [
+        // Garis kiri
         const Expanded(child: Divider(color: Color(0xFFE0E0E0))),
+
+        // Teks di tengah
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
@@ -478,23 +551,27 @@ class _SignUpPageState extends State<SignUpPage> {
             style: TextStyle(color: Colors.grey[600], fontSize: 12),
           ),
         ),
+
+        // Garis kanan
         const Expanded(child: Divider(color: Color(0xFFE0E0E0))),
       ],
     );
   }
 
+  /// Widget untuk membuat tombol social media sign up
+  /// Dengan icon dalam lingkaran dan efek ripple saat diklik
   Widget _socialSignUpButton({
     required IconData icon,
     required Color color,
     required VoidCallback onPressed,
   }) {
-    // Menggunakan Material dan InkWell untuk efek splash yang bagus pada lingkaran
     return Container(
       width: 50,
       height: 50,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white,
+        // Shadow untuk efek depth
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
@@ -506,16 +583,18 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       child: Material(
         color: Colors.transparent,
+        // InkWell untuk efek ripple saat diklik
         child: InkWell(
           onTap: onPressed,
-          customBorder:
-              const CircleBorder(), // Efek sentuhan berbentuk lingkaran
+          customBorder: const CircleBorder(), // Ripple berbentuk lingkaran
           child: Center(child: Icon(icon, size: 28, color: color)),
         ),
       ),
     );
   }
 
+  /// Dispose controllers saat widget dihancurkan
+  /// Untuk menghindari memory leak
   @override
   void dispose() {
     _usernameController.dispose();

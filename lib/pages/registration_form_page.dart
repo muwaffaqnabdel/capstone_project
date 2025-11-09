@@ -6,7 +6,7 @@ class RegistrationFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color accentColor = Colors.teal.shade600;
+    final Color accentColor = Colors.pink[200]!;
 
     return Scaffold(
       appBar: AppBar(
