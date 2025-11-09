@@ -209,14 +209,11 @@ class _MultiStepFormPageState extends State<MultiStepFormPage> {
       case 0:
         return _buildFormTemplate(
           step: step,
-          title: "Langkah 1: IMT Anak",
+          title: "Langkah 1: Data Pribadi",
           titleColor: secondaryBlue, // Diganti Biru
           fields: [
-            _buildTextField(
-              "Berat Badan (kg)",
-              "berat_badan",
-              TextInputType.number,
-            ),
+            _buildTextField("Nama Lengkap", "nama", TextInputType.name),
+            _buildTextField("Alamat", "alamat", TextInputType.streetAddress),
           ],
         );
 

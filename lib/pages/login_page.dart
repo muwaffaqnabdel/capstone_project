@@ -123,10 +123,12 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.blue[100],
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
-                          Icons.pregnant_woman,
-                          size: 40, // Ukuran icon di dalam container
-                          color: Colors.blue[300],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            'assets/images/logo_baru.png',
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ],
