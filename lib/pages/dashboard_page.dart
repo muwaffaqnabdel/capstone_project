@@ -140,7 +140,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        shape: BoxShape.circle,
+                        shape: BoxShape.rectangle,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.2),

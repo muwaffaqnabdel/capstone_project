@@ -125,9 +125,10 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            'assets/images/logo_baru.png',
-                            fit: BoxFit.contain,
+                          child: Icon(
+                            Icons.local_hospital,
+                            size: 40,
+                            color: Colors.blue[400],
                           ),
                         ),
                       ),
